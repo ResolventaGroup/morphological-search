@@ -1,0 +1,24 @@
+{
+  "name": "stapostol/morph-analyzer",
+  "description": "Package for searching the phrases in the text.",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Morphy\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "makhov/phpmorphy": "dev-master",
+    "ext-mbstring": "*"
+  },
+  "minimum-stability": "dev",
+  "require-dev": {
+    "phpunit/phpunit": "^9.4@dev"
+  }
+}
