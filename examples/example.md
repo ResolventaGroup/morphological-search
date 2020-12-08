@@ -1,8 +1,5 @@
+```php
 <?php
-
-/**
- * Example create and usage SemanticPresenceInTextAnalyzer
- */
 
 use Morphy\FuzzyKeywordSearch\Analyzer\PresenceGroupsWordsInStringAnalyzer;
 use Morphy\FuzzyKeywordSearch\FuzzyKeywordSearcher;
@@ -85,5 +82,52 @@ But when he reached the end, he saw the Tortoise there already, sleeping comfort
 
 $semanticMatches = $semanticPresenceInTextAnalyzer->analyzeText($sourceText);
 
-var_dump($semanticMatches);
+print_r($semanticMatches);
+```
 
+Result 
+```php
+Array
+(
+    [0] => Morphy\SemanticText\SemanticMatch Object
+        (
+            [semanticObject] => Word Object
+                (
+                    [text:Word:private] => 'sleep'
+                )
+
+            [matchedKeyword] => 'sleeping'
+        )
+
+    [1] => Morphy\SemanticText\SemanticMatch Object
+        (
+            [semanticObject] => Word Object
+                (
+                    [text:Word:private] => 'can'
+                )
+
+            [matchedKeyword] => 'could'
+        )
+
+    [2] => Morphy\SemanticText\SemanticMatch Object
+        (
+            [semanticObject] => Word Object
+                (
+                    [text:Word:private] => 'reach'
+                )
+
+            [matchedKeyword] => 'reached'
+        )
+
+    [3] => Morphy\SemanticText\SemanticMatch Object
+        (
+            [semanticObject] => Word Object
+                (
+                    [text:Word:private] => 'run'
+                )
+
+            [matchedKeyword] => 'ran'
+        )
+
+)
+```

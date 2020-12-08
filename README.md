@@ -11,3 +11,6 @@ Via Composer
 ```sh
 composer require resolventa/morphological-search
 ```
+
+# Example usage
+[Example configure and search](https://github.com/ResolventaGroup/morphological-search/blob/master/examples/example.md)
