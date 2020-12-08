@@ -1,7 +1,9 @@
 {
   "name": "resolventa/morphological-search",
   "description": "Morphological search for Russian, English and German languages ",
+  "keywords": ["morphological search", "morphy", "php", "phpMorphy", "php-morphy", "phpmorphy"],
   "type": "library",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Morphy\\": "./src"
