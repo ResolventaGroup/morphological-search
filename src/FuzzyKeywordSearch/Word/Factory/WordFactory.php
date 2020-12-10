@@ -19,7 +19,7 @@ class WordFactory
 
         $baseFormsWord = $this->phpMorphy->getBaseForm($prepareWord);
 
-        return new Word($positionInString, $word, $baseFormsWord);
+        return new Word($positionInString, $word, is_array($baseFormsWord) ? $baseFormsWord : [$word]);
     }
 
     private function prepareStringForPhpMorphy(string $prepareString): string
