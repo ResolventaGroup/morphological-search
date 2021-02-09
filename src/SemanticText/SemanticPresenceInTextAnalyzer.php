@@ -64,9 +64,7 @@ class SemanticPresenceInTextAnalyzer
     private function isHaveAdvancedSemanticObject(SemanticObjectInterface $semanticObject, iterable $foundCombinationsWordsSemanticMatches): bool
     {
         foreach ($foundCombinationsWordsSemanticMatches as $foundCombinationsWordsSemanticMatch) {
-            $positionStartSemanticObjectText = mb_stripos($foundCombinationsWordsSemanticMatch->semanticObject->getText(), $semanticObject->getText());
-
-            if ($positionStartSemanticObjectText !== false) {
+            if ($foundCombinationsWordsSemanticMatch->semanticObject->getIdentifier() === $semanticObject->getIdentifier()) {
                 return true;
             }
         }
