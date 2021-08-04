@@ -9,9 +9,7 @@ use Traversable;
 
 final class GroupedWordsCollection implements IteratorAggregate, Countable
 {
-    private $elements;
-
-    public function __construct(array $elements = [])
+    public function __construct(private array $elements = [])
     {
         self::assertInstanceOfWordCollection($elements);
 

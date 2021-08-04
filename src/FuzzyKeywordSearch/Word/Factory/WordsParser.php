@@ -4,12 +4,10 @@ namespace Morphy\FuzzyKeywordSearch\Word\Factory;
 
 class WordsParser
 {
-    private $filters;
-
     /**
      * @param callable[] $filters
      */
-    public function __construct(array $filters)
+    public function __construct(private array $filters)
     {
         self::assertFilterIsCallable($filters);
 

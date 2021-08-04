@@ -7,15 +7,8 @@ final class Word
     private const POSITION_PREVIOUS_WORD = -1;
     private const POSITION_NEXT_WORD = 1;
 
-    public $positionInString;
-    public $originalForm;
-    public $baseForm;
-
-    public function __construct(int $positionInString, string $originalForm, array $baseForm)
+    public function __construct(public int $positionInString, public string $originalForm, public array $baseForm)
     {
-        $this->positionInString = $positionInString;
-        $this->originalForm = $originalForm;
-        $this->baseForm = $baseForm;
     }
 
     public function isNear(Word $word): bool

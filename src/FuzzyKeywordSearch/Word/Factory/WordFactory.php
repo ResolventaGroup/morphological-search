@@ -6,11 +6,8 @@ use Morphy\FuzzyKeywordSearch\Word\Word;
 
 class WordFactory
 {
-    private $phpMorphy;
-
-    public function __construct(\phpMorphy $phpMorphy)
+    public function __construct(private \phpMorphy $phpMorphy)
     {
-        $this->phpMorphy = $phpMorphy;
     }
 
     public function create(int $positionInString, string $word): Word

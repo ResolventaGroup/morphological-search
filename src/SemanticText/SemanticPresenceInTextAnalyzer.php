@@ -5,21 +5,20 @@ namespace Morphy\SemanticText;
 use Morphy\FuzzyKeywordSearch\FuzzyKeywordSearcher;
 use Morphy\FuzzyKeywordSearch\Word\Factory\WordCollectionFactory;
 use Morphy\FuzzyKeywordSearch\Word\WordCollection;
+use Psr\SimpleCache\CacheInterface;
 
 class SemanticPresenceInTextAnalyzer
 {
-    private $wordCollectionFactory;
-    private $fuzzyKeywordSearchService;
-    private $semanticObjectRepository;
-
     public function __construct(
-        FuzzyKeywordSearcher $fuzzyKeywordSearchService,
-        WordCollectionFactory $wordCollectionFactory,
-        SemanticObjectRepositoryInterface $semanticObjectRepository
+        private FuzzyKeywordSearcher $fuzzyKeywordSearchService,
+        private WordCollectionFactory $wordCollectionFactory,
+        private SemanticObjectRepositoryInterface $semanticObjectRepository,
+        private CacheInterface $cache,
+        private array $cacheSettings
     ) {
-        $this->fuzzyKeywordSearchService = $fuzzyKeywordSearchService;
-        $this->wordCollectionFactory = $wordCollectionFactory;
-        $this->semanticObjectRepository = $semanticObjectRepository;
+        if (!isset($cacheSettings['ttl']) || !isset($cacheSettings['key'])) {
+            throw new \RuntimeException('Cache setting dont have key or ttl data');
+        }
     }
 
     /**
@@ -31,8 +30,8 @@ class SemanticPresenceInTextAnalyzer
 
         $foundCombinationsWordsSemanticMatches = [];
 
-        foreach ($this->semanticObjectRepository->findAllForSemanticAnalyze() as $semanticModel) {
-            $searchWords = $this->wordCollectionFactory->createFromString($semanticModel->getText());
+        foreach ($this->cachedDataIterator() as $semanticModelCacheData) {
+            [$semanticModel, $searchWords] = $semanticModelCacheData;
 
             $foundSimilarKeyword = $this->findSemanticWordInText($originalWords, $searchWords);
 
@@ -48,6 +47,26 @@ class SemanticPresenceInTextAnalyzer
         }
 
         return $foundCombinationsWordsSemanticMatches;
+    }
+
+    private function cachedDataIterator()
+    {
+        if ($this->cache->has($this->cacheSettings['key'])) {
+            return $this->cache->get($this->cacheSettings['key']);
+        }
+
+        $data = [];
+
+        foreach ($this->semanticObjectRepository->findAllForSemanticAnalyze() as $semanticModel) {
+            $data[$semanticModel->getIdentifier()] = [
+                new CachedSemanticObject($semanticModel->getIdentifier(), $semanticModel->getText()),
+                $this->wordCollectionFactory->createFromString($semanticModel->getText()),
+            ];
+        }
+
+        $this->cache->set($this->cacheSettings['key'], $data, $this->cacheSettings['ttl']);
+
+        return $data;
     }
 
     private function findSemanticWordInText(WordCollection $originalWords, WordCollection $searchWords): string

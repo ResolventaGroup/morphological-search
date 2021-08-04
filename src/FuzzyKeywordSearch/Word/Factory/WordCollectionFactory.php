@@ -6,13 +6,8 @@ use Morphy\FuzzyKeywordSearch\Word\WordCollection;
 
 class WordCollectionFactory
 {
-    private $wordsParser;
-    private $wordFactory;
-
-    public function __construct(WordsParser $wordsParser, WordFactory $wordFactory)
+    public function __construct(private WordsParser $wordsParser, private WordFactory $wordFactory)
     {
-        $this->wordsParser = $wordsParser;
-        $this->wordFactory = $wordFactory;
     }
 
     public function createFromString(string $string): WordCollection

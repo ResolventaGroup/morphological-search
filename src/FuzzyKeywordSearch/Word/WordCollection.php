@@ -8,9 +8,7 @@ use Traversable;
 
 final class WordCollection implements IteratorAggregate, \Countable
 {
-    private $elements;
-
-    public function __construct(array $elements = [])
+    public function __construct(private array $elements = [])
     {
         self::assertInstanceOfWord($elements);
 

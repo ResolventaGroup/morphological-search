@@ -7,11 +7,8 @@ use Morphy\FuzzyKeywordSearch\Word\WordCollection;
 
 class FuzzyKeywordSearcher
 {
-    private $presenceGroupsWordsInStringAnalyzer;
-
-    public function __construct(PresenceGroupsWordsInStringAnalyzer $presenceGroupsWordsInStringAnalyzer)
+    public function __construct(private PresenceGroupsWordsInStringAnalyzer $presenceGroupsWordsInStringAnalyzer)
     {
-        $this->presenceGroupsWordsInStringAnalyzer = $presenceGroupsWordsInStringAnalyzer;
     }
 
     public function searchKeywordInSourceString(WordCollection $sourceWords, WordCollection $searchWords): string

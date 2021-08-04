@@ -2,7 +2,7 @@
 Morphological search based on https://github.com/makhov/phpmorphy for Russian, English and German languages
 
 # Requirements
-* php >=7.1,
+* php >=8.0,
 * makhov/phpmorphy
 * mbstring extension
 
