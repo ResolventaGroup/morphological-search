@@ -51,14 +51,18 @@ class SemanticPresenceInTextAnalyzer
 
     private function cachedDataIterator()
     {
-        if ($this->cache->has($this->cacheSettings['key'])) {
-            return $this->cache->get($this->cacheSettings['key']);
-        }
-
         $data = [];
 
+        if ($this->cache->has($this->cacheSettings['key'])) {
+            $data = $this->cache->get($this->cacheSettings['key']);
+        }
+
+        if (!empty($data)) {
+            return $data;
+        }
+
         foreach ($this->semanticObjectRepository->findAllForSemanticAnalyze() as $semanticModel) {
-            $data[$semanticModel->getIdentifier()] = [
+            $data[] = [
                 new CachedSemanticObject($semanticModel->getIdentifier(), $semanticModel->getText()),
                 $this->wordCollectionFactory->createFromString($semanticModel->getText()),
             ];
